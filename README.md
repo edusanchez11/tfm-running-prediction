@@ -68,8 +68,8 @@ Desarrollar un sistema inteligente de predicción del rendimiento en corredores 
 #### 3.1 Distribución del Dataset
 - **Total actividades**: 673
 - **Usuarios únicos**: 9  
-- **Distancia promedio**: 7.2 km  4.1
-- **Pace promedio**: 5:23 min/km  1:12
+- **Distancia promedio**: 7.2 km 
+- **Pace promedio**: 5:23 min/km  
 
 #### 3.2 Insights Clave
 1. **Estacionalidad**: Variación del 15% en rendimiento según época
@@ -209,20 +209,6 @@ def simulate_progression(user_data, weeks=8):
 3. **Periodización**: Estructura macro/meso/micro ciclos
 4. **Adaptación dinámica**: Ajuste basado en progreso real
 
-##  Casos de Uso Validados
-
-### Caso 1: Corredor Principiante
-**Perfil**: María, 28 años, 6 meses corriendo  
-**Objetivo**: Completar primera carrera 10K  
-**Predicción sistema**: 10K factible en 12 semanas  
-**Resultado real**: Completó 10K en 61:30 (predicción: 62:15) 
-
-### Caso 2: Corredor Competitivo  
-**Perfil**: Javier, 34 años, 8 años corriendo  
-**Objetivo**: Bajar de 3h en maratón (PB: 3:08)  
-**Predicción sistema**: Necesario 16 semanas preparación  
-**Resultado real**: Maratón en 2:57:32 (predicción: 2:58:45) 
-
 ### Validación Cuantitativa
 | Horizonte temporal | n | Precisión Media |
 |--------------------|---|-----------------|
@@ -273,7 +259,6 @@ def simulate_progression(user_data, weeks=8):
 | **Precisión modelo** | 89.1% | 92%+ |
 
 ### Reconocimientos
-**Directores TFM**: Dr. [Nombre Director], Universidad de Murcia  
 **Colaboradores datos**: 9 corredores voluntarios (datos anonimizados)  
 **Open Source**: Scikit-learn, Streamlit, Plotly communities
 
@@ -297,7 +282,7 @@ streamlit run app.py
 ##  Contacto
 
 **Eduardo Sánchez**  
- Máster Data Science & AI, Universidad de Murcia  
+ Máster Data Science & AI
  eduardosanchezterroba@gmail.com  
  [@edusanchez11](https://github.com/edusanchez11)
 
