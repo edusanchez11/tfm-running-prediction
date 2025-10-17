@@ -1,0 +1,34 @@
+"Marca temporal","Consentimiento informado (obligatorio — checkbox):
+“Acepto que mis datos sean utilizados de forma anónima y exclusivamente con fines académicos para el TFM ‘Predicción del rendimiento en corredores mediante técnicas de Machine Learning’.","Nombre (obligatorio):
+Este será usado para unir tu formulario con los registros de Srava","  Edad (años)  ","  Sexo/Género:  ","  Peso (kg)  ","  Altura (cm)  ","Nivel de experiencia en running:
+Principiante (menos de 1 año entrenando regularmente)
+Intermedio (1–3 años entrenando regularmente)
+Avanzado/Competitivo (más de 3 años entrenando, compito en pruebas)","  Objetivo principal actual:","  Días que entrenas por semana (aprox)  ","  📂 Subida de datos ;
+🔽 Pasos sencillos 
+Entra en tu cuenta de Strava desde un navegador (ordenador).
+Arriba a la derecha, haz clic en tu foto de perfil → selecciona Ajustes.
+En el menú lateral izquierdo, elige Mi Cuenta.
+Baja hasta abajo en el apartado Descargar o eliminar tus datos.
+Pulsa Solicitar archivo en “Descargar todos tus datos”.
+Strava te enviará un email con un enlace de descarga al mail (tarda unos minutos).
+Descarga el .ZIP que recibas.
+Dentro del ZIP hay un archivo llamado activities.csv → este es el que necesitas subir en el formulario.
+
+  Si quieres, renómbralo con tu alias antes de subirlo (ejemplo: juan_gomez_activities.csv).  "
+"2025/09/08 7:56:27 p. m. EEST","Acepto","Eduardo Sánchez","23","Masculino","67","175","Intermedio","Media Maraton (21 km)","3",""
+"2025/09/08 8:03:33 p. m. EEST","Acepto","Axel","23","Masculino","80","185","Intermedio","Salud / Ocio","1",""
+"2025/09/10 5:12:19 p. m. EEST","Acepto","Juan Sánchez Arregui","23","Masculino","88","183","Principiante","Media Maraton (21 km)","3","https://drive.google.com/u/0/open?usp=forms_web&id=16ymcqBlj01682ebNXu0cjJtiPoZWdjzc"
+"2025/09/10 5:56:08 p. m. EEST","Acepto","Diego Llorente","26","Masculino","65","170","Avanzado","Salud / Ocio","3","https://drive.google.com/u/0/open?usp=forms_web&id=1pz0gqEM3ERw_GTeujReNo5FAPPx36Eu6"
+"2025/09/10 10:45:57 p. m. EEST","Acepto","Miguel","29","Masculino","83","193","Avanzado","Maratón (42 km)","4",""
+"2025/09/10 11:38:06 p. m. EEST","Acepto","Alba","27","Femenino","52","158","Intermedio","Media Maraton (21 km)","2",""
+"2025/09/11 7:04:54 a. m. EEST","Acepto","Francisco Ramos","28","Masculino","63","167","Intermedio","10 km","2",""
+"2025/09/11 9:39:22 a. m. EEST","Acepto","Javier Monterde","28","Masculino","75","1,73","Intermedio","Media Maraton (21 km)","3","https://drive.google.com/u/0/open?usp=forms_web&id=14kA0arjfS8Fx0PRa3YpgZNa0n6f2cix8"
+"2025/09/11 11:19:16 a. m. EEST","Acepto","Hugo Magallón Causapé","24","Masculino","89","197","Principiante","Media Maraton (21 km)","3","https://drive.google.com/u/0/open?usp=forms_web&id=1vryAc8XM7IHYxpiVIEIACM_k115WScQe"
+"2025/09/12 12:55:23 a. m. EEST","Acepto","José Carreño Alguacil","23","Masculino","67","170","Avanzado","10 km","4","https://drive.google.com/u/0/open?usp=forms_web&id=120QJrLnfE6CSPvfm6PExrJ3ftmFHuMiS"
+"2025/09/15 1:17:31 a. m. EEST","Acepto","Leyre","22 ","Femenino","48,5kg","1,63","Avanzado","Salud / Ocio","3-4","https://drive.google.com/u/0/open?usp=forms_web&id=1AIaQEKSKVE4ObGO381LxOXSbVloYCDXt"
+"2025/09/16 11:49:09 p. m. EEST","Acepto","Marta","21","Femenino","61","174","Principiante","Media Maraton (21 km)","4 ","https://drive.google.com/u/0/open?usp=forms_web&id=1As_xdP16A1d2e0RsRYLbnsDJPX2Bdf_N"
+"2025/09/17 4:03:45 p. m. EEST","Acepto","pepe","50","Otro / Prefiero no decirlo","100","190","Intermedio","Salud / Ocio","3",""
+"2025/09/19 7:32:08 p. m. EEST","Acepto","marta","24","Femenino","54","165","Intermedio","10 km","4 deporte y correr no constante ","https://drive.google.com/u/0/open?usp=forms_web&id=1Aj8esDjMF0W1wUacI9XY1irzJkPzASqd"
+"2025/09/20 11:38:49 a. m. EEST","Acepto","Natalia","24","Femenino","51","1.63","Principiante","10 km","5","https://drive.google.com/u/0/open?usp=forms_web&id=1xsAfkQ-KdEnsjCO2d2RMPRlw-aDMhIGk"
+"2025/09/22 9:46:17 p. m. EEST","Acepto","Carlos Arroyo ","26","Masculino","70","180","Avanzado","10 km","3",""
+"2025/09/22 9:47:50 p. m. EEST","Acepto","Carlos Arroyo de Pablo","26","Masculino","70","180","Intermedio;Avanzado","Salud / Ocio","2","https://drive.google.com/u/0/open?usp=forms_web&id=17b6I5sfzFtleYTZtN7CWAWuBFRsIlKtQ"
