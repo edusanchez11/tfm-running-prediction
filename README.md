@@ -7,7 +7,7 @@
 
 ##  Resumen Ejecutivo
 
-Este **Trabajo de Fin de Máster (TFM)** del Máster en Data Science & AI de la Universidad de Murcia presenta una solución innovadora para la predicción del rendimiento deportivo en corredores mediante técnicas avanzadas de Machine Learning.
+Este **Trabajo de Fin de Máster (TFM)** del Máster en Data Science & AI presenta una solución innovadora para la predicción del rendimiento deportivo en corredores mediante técnicas avanzadas de Machine Learning.
 
 ###  Problema y Motivación
 
