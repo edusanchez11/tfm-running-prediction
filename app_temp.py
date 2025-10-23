@@ -7,10 +7,12 @@ from plotly.subplots import make_subplots
 import joblib
 import warnings
 from datetime import datetime, timedelta
+import chardet
+import io
 warnings.filterwarnings('ignore')
 
 st.set_page_config(
-    page_title=' StravaPro Analyzer',
+    page_title='🏃 StravaPro Analyzer',
     page_icon='',
     layout='wide'
 )
@@ -120,6 +122,125 @@ def load_model():
     try:
         return joblib.load('notebooks/models/pace_predictor_optimized.pkl')
     except:
+        return None
+
+def load_csv_safely(uploaded_file):
+    """Cargar CSV de forma segura detectando encoding y formato autom?ticamente"""
+    try:
+        # Leer el contenido raw para detectar encoding
+        raw_data = uploaded_file.read()
+        
+        # Detectar codificaci?n
+        result = chardet.detect(raw_data)
+        encoding = result['encoding'] if result['encoding'] else 'utf-8'
+        
+        # Si chardet detecta Windows-1252 o similar, intentar UTF-8 primero
+        encodings_to_try = ['utf-8', encoding, 'latin-1', 'cp1252'] if encoding != 'utf-8' else ['utf-8', 'latin-1', 'cp1252']
+        
+        df = None
+        encoding_used = None
+        
+        # Probar diferentes encodings
+        for enc in encodings_to_try:
+            try:
+                uploaded_file.seek(0)
+                
+                # Detectar delimitador leyendo una muestra
+                sample = raw_data[:2048].decode(enc, errors='ignore')
+                
+                # Contar separadores para determinar el m?s probable
+                comma_count = sample.count(',')
+                semicolon_count = sample.count(';')
+                
+                # Elegir el delimitador m?s com?n
+                delimiter = ';' if semicolon_count > comma_count else ','
+                
+                # Leer CSV
+                uploaded_file.seek(0)
+                df = pd.read_csv(uploaded_file, encoding=enc, sep=delimiter, low_memory=False)
+                encoding_used = enc
+                break
+                
+            except Exception as e:
+                continue
+        
+        if df is None:
+            st.error(' No se pudo cargar el CSV con ning?n encoding')
+            return None
+        
+        # Mapeo de columnas espa?ol -> ingl?s
+        column_mapping = {
+            # Columnas principales
+            'Fecha de la actividad': 'Activity Date',
+            'Nombre de la actividad': 'Activity Name', 
+            'Tipo de actividad': 'Activity Type',
+            'Tiempo transcurrido': 'Elapsed Time',
+            'Tiempo en movimiento': 'Moving Time',
+            'Distancia': 'Distance',
+            'Velocidad promedio': 'Average Speed',
+            'Ritmo promedio': 'Average Pace',
+            'Desnivel positivo': 'Elevation Gain',
+            'Ritmo cardiaco promedio': 'Average Heart Rate',
+            'Ritmo cardiaco m?ximo': 'Max Heart Rate',
+            'Calor?as': 'Calories',
+            
+            # Variaciones con caracteres mal codificados (UTF-8 issues)
+            'ID de actividad': 'Activity ID',
+            'Descripci?n de la actividad': 'Activity Description',
+            'Descripci?n de la actividad': 'Activity Description',
+            'Velocidad m?xima': 'Max Speed',
+            'Velocidad m??xima': 'Max Speed',
+            'Esfuerzo Relativo': 'Relative Effort',
+            'Pendiente promedio': 'Average Grade',
+            'Temperatura promedio': 'Average Temperature',
+            'Ritmo cardiaco m??ximo': 'Max Heart Rate',
+            'Calor?as': 'Calories'
+        }
+        
+        # Aplicar mapeo de columnas
+        df_renamed = df.rename(columns=column_mapping)
+        
+        # Mostrar mapeo aplicado
+        mapped_columns = {old: new for old, new in column_mapping.items() if old in df.columns}
+        if mapped_columns:
+            st.info(f' Columnas traducidas: {len(mapped_columns)} columnas convertidas de espa?ol a ingl?s')
+            with st.expander(' Ver mapeo de columnas'):
+                for old, new in mapped_columns.items():
+                    st.write(f' "{old}"  "{new}"')
+        
+        # Convertir columnas num?ricas con formato espa?ol (coma decimal)
+        numeric_columns_to_fix = ['Distance', 'Elapsed Time', 'Moving Time', 'Average Speed', 'Max Speed', 
+                                 'Average Pace', 'Elevation Gain', 'Average Heart Rate', 'Max Heart Rate', 'Calories']
+        
+        fixed_columns = []
+        for col in numeric_columns_to_fix:
+            if col in df_renamed.columns:
+                # Verificar si la columna contiene comas como separador decimal
+                sample_values = df_renamed[col].dropna().astype(str).head(100)
+                if sample_values.str.contains(',', regex=False).any():
+                    try:
+                        # Convertir comas a puntos y luego a float
+                        df_renamed[col] = df_renamed[col].astype(str).str.replace(',', '.', regex=False)
+                        df_renamed[col] = pd.to_numeric(df_renamed[col], errors='coerce')
+                        fixed_columns.append(col)
+                    except Exception as e:
+                        pass  # Silencioso
+        
+        if fixed_columns:
+            st.success(f' Formato num?rico corregido en {len(fixed_columns)} columnas: {", ".join(fixed_columns)}')
+        
+        # Verificar que tenemos las columnas esenciales
+        essential_columns = ['Activity Date', 'Distance']
+        missing_essential = [col for col in essential_columns if col not in df_renamed.columns]
+        
+        if missing_essential:
+            st.warning(f' Columnas esenciales faltantes: {missing_essential}')
+            st.write('**Columnas disponibles:**', list(df_renamed.columns))
+        
+        return df_renamed
+        
+    except Exception as e:
+        st.error(f' Error cargando CSV: {str(e)}')
         return None
 
 def detect_strava_columns(df):
@@ -809,7 +930,7 @@ def create_feature_importance_chart(model_data):
 
 def main():
     # HEADER CON ESTILO STRAVA
-    st.markdown(f'<h1 class="strava-header"> StravaPro Analyzer</h1>', unsafe_allow_html=True)
+    st.markdown(f'<h1 class="strava-header">🏃 StravaPro Analyzer</h1>', unsafe_allow_html=True)
     st.markdown('###  Análisis avanzado con Machine Learning y simulador de progresión')
     st.markdown('---')
     
@@ -838,7 +959,11 @@ def main():
     
     if uploaded_file is not None:
         try:
-            df_raw = pd.read_csv(uploaded_file)
+            df_raw = load_csv_safely(uploaded_file)
+            
+            if df_raw is None:
+                st.error(' No se pudo procesar el archivo CSV')
+                return
             st.success(f' Cargadas **{len(df_raw):,}** actividades')
             
             with st.expander(' Vista previa de datos'):
@@ -1109,6 +1234,27 @@ def main():
         st.info(' **Sube tu CSV de Strava para comenzar el análisis**')
         
         # Ejemplo de datos esperados
+        st.markdown('###  Formato esperado')
+        
+        sample_data = pd.DataFrame({
+            'Activity Date': ['2024-01-15', '2024-01-17', '2024-01-20'],
+            'Distance': [10.5, 8.2, 12.0],
+            'Elapsed Time': [3150, 2460, 3600],  # segundos
+            'Average Pace': [5.00, 5.15, 5.30]
+        })
+        
+        st.dataframe(sample_data, use_container_width=True)
+        
+        st.markdown(f'''
+        <div style="background: {STRAVA_LIGHT}; padding: 15px; border-radius: 10px;">
+        <strong> Datos necesarios:</strong><br>
+         <strong>Activity Date:</strong> Fecha de cada entrenamiento<br>
+         <strong>Distance:</strong> Distancia (km, metros o millas - se detecta automáticamente)<br>
+         <strong>Elapsed Time:</strong> Tiempo total en segundos (PREFERIDO para cálculo preciso)<br>
+         <strong>Average Pace:</strong> Pace promedio (respaldo si no hay Elapsed Time)
+        </div>
+        ''', unsafe_allow_html=True)
+    
     # FOOTER ESTILO STRAVA
     st.markdown('---')
     st.markdown(f'''
