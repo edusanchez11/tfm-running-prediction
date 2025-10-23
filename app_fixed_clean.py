@@ -159,7 +159,7 @@ def load_csv_safely(uploaded_file):
                 uploaded_file.seek(0)
                 df = pd.read_csv(uploaded_file, encoding=enc, sep=delimiter, low_memory=False)
                 encoding_used = enc
-                st.success(f' CSV cargado exitosamente (encoding: {enc}, separador: "{delimiter}")')
+                
                 break
                 
             except Exception as e:
@@ -201,13 +201,8 @@ def load_csv_safely(uploaded_file):
         # Aplicar mapeo de columnas
         df_renamed = df.rename(columns=column_mapping)
         
-        # Mostrar mapeo aplicado
+        # Aplicar mapeo silenciosamente
         mapped_columns = {old: new for old, new in column_mapping.items() if old in df.columns}
-        if mapped_columns:
-            st.info(f' Columnas traducidas: {len(mapped_columns)} columnas convertidas de espa?ol a ingl?s')
-            with st.expander(' Ver mapeo de columnas'):
-                for old, new in mapped_columns.items():
-                    st.write(f' "{old}"  "{new}"')
         
         # Convertir columnas num?ricas con formato espa?ol (coma decimal)
         numeric_columns_to_fix = ['Distance', 'Elapsed Time', 'Moving Time', 'Average Speed', 'Max Speed', 
@@ -225,19 +220,15 @@ def load_csv_safely(uploaded_file):
                         df_renamed[col] = pd.to_numeric(df_renamed[col], errors='coerce')
                         fixed_columns.append(col)
                     except Exception as e:
-                        st.warning(f' No se pudo convertir la columna {col}: {str(e)}')
-        
+
         if fixed_columns:
-            st.success(f' Formato num?rico corregido en {len(fixed_columns)} columnas: {", ".join(fixed_columns)}')
-        
+
         # Verificar que tenemos las columnas esenciales
         essential_columns = ['Activity Date', 'Distance']
         missing_essential = [col for col in essential_columns if col not in df_renamed.columns]
         
         if missing_essential:
-            st.warning(f' Columnas esenciales faltantes: {missing_essential}')
-            st.write('**Columnas disponibles:**', list(df_renamed.columns))
-        
+
         return df_renamed
         
     except Exception as e:
@@ -289,8 +280,7 @@ def calculate_pace_from_time_distance(df):
 def process_strava_data(df):
     '''Procesar datos de Strava con cálculo correcto de pace'''
     try:
-        st.info(' Procesando CSV...')
-        
+
         column_mapping = detect_strava_columns(df)
         if not column_mapping:
             st.error(' No se detectaron columnas válidas')
@@ -332,13 +322,12 @@ def process_strava_data(df):
             
             # Si está en milisegundos (valores muy grandes)
             if df_processed['elapsed_time'].mean() > 100000:
-                st.info(' Detectado tiempo en milisegundos, convirtiendo a segundos...')
+                
                 df_processed['elapsed_time'] = df_processed['elapsed_time'] / 1000
         
         # CÁLCULO CORRECTO DEL PACE
         if 'elapsed_time' in df_processed.columns and 'distance_km' in df_processed.columns:
-            st.info(' Calculando pace usando tiempo y distancia...')
-            
+
             # Filtrar datos válidos
             valid_data = df_processed.dropna(subset=['elapsed_time', 'distance_km'])
             valid_data = valid_data[(valid_data['elapsed_time'] > 0) & (valid_data['distance_km'] > 0)]
@@ -348,14 +337,13 @@ def process_strava_data(df):
                 
                 # Convertir pace_formatted_calc a segundos para compatibilidad
                 df_processed['pace_seconds'] = df_processed['pace_formatted_calc'].apply(pace_decimal_to_seconds)
-                
-                st.success(f' Pace calculado para {len(df_processed)} actividades')
+
             else:
                 st.warning(' No hay datos válidos de tiempo y distancia para calcular pace')
         
         # Si no hay elapsed_time, usar Average Pace si está disponible
         elif 'pace_formatted' in df_processed.columns:
-            st.info(' Usando Average Pace del CSV...')
+            
             df_processed['pace_seconds'] = df_processed['pace_formatted'].apply(pace_decimal_to_seconds)
         
         return df_processed
@@ -966,12 +954,7 @@ def main():
                 st.error(' No se pudo procesar el archivo CSV')
                 return
             st.success(f' Cargadas **{len(df_raw):,}** actividades')
-            
-            with st.expander(' Vista previa de datos'):
-                st.write(f'**Columnas disponibles ({len(df_raw.columns)}):**')
-                st.write(', '.join(df_raw.columns.tolist()))
-                st.dataframe(df_raw.head(5))
-            
+
             df_processed = process_strava_data(df_raw)
             
             if df_processed is not None and len(df_processed) > 0:
@@ -1268,19 +1251,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
