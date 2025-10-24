@@ -542,7 +542,7 @@ def create_weekly_training_plan(weekly_goal, experience, selected_days=None):
             y=training_df['Kilómetros'],
             text=[f"{km} km<br>{tipo}" for km, tipo in zip(training_df['Kilómetros'], training_df['Tipo'])],
             textposition='auto',
-            marker_color=training_df['Color'],
+            marker_color=STRAVA_ORANGE,
             hovertemplate='<b>%{x}</b><br>%{text}<extra></extra>',
             showlegend=False
         )
@@ -779,10 +779,10 @@ def create_ml_progress_chart(df, model_data, selected_years):
                 go.Scatter(
                     x=pace_data['activity_date'],
                     y=pace_minutes,
-                    mode='markers+lines',
+                    mode='markers',
                     name=' Pace Real',
                     line=dict(color=STRAVA_ORANGE, width=3),
-                    marker=dict(size=8, color=STRAVA_ORANGE),
+                    marker=dict(size=6, color=STRAVA_ORANGE, opacity=0.7),
                     hovertemplate='<b>%{x}</b><br>Pace Real: %{customdata}<extra></extra>',
                     customdata=[seconds_to_pace(p) for p in pace_data['pace_seconds']]
                 ),
