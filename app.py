@@ -12,8 +12,8 @@ import io
 warnings.filterwarnings('ignore')
 
 st.set_page_config(
-    page_title=' Predictor de Rendimiento Running',
-    page_icon='',
+    page_title='🏃‍♂️ StravaPro Analyzer',
+    page_icon='🏃‍♂️',
     layout='wide'
 )
 
@@ -931,7 +931,7 @@ def create_feature_importance_chart(model_data):
 
 def main():
     # HEADER CON ESTILO STRAVA
-    st.markdown(f'<h1 class="strava-header"> Predictor de Rendimiento Running</h1>', unsafe_allow_html=True)
+    st.markdown(f'<h1 class="strava-header">🏃‍♂️ StravaPro Analyzer</h1>', unsafe_allow_html=True)
     st.markdown('###  Análisis avanzado con Machine Learning y simulador de progresión')
     st.markdown('---')
     
@@ -1260,7 +1260,7 @@ def main():
     st.markdown('---')
     st.markdown(f'''
     <div style='text-align: center; color: {STRAVA_GRAY}; background: {STRAVA_LIGHT}; padding: 20px; border-radius: 10px;'>
-        <p> <strong style="color: {STRAVA_DARK};">Predictor de Rendimiento Running</strong> | 
+        <p> <strong style="color: {STRAVA_DARK};">🏃‍♂️ StravaPro Analyzer</strong> | 
         Análisis con cálculo preciso de pace y simulador de progresión</p>
         <p><em>Desarrollado para optimizar tu entrenamiento </em></p>
     </div>
