@@ -1233,28 +1233,6 @@ def main():
     
     else:
         st.info(' **Sube tu CSV de Strava para comenzar el análisis**')
-        
-        # Ejemplo de datos esperados
-        st.markdown('###  Formato esperado')
-        
-        sample_data = pd.DataFrame({
-            'Activity Date': ['2024-01-15', '2024-01-17', '2024-01-20'],
-            'Distance': [10.5, 8.2, 12.0],
-            'Elapsed Time': [3150, 2460, 3600],  # segundos
-            'Average Pace': [5.00, 5.15, 5.30]
-        })
-        
-        st.dataframe(sample_data, use_container_width=True)
-        
-        st.markdown(f'''
-        <div style="background: {STRAVA_LIGHT}; padding: 15px; border-radius: 10px;">
-        <strong> Datos necesarios:</strong><br>
-         <strong>Activity Date:</strong> Fecha de cada entrenamiento<br>
-         <strong>Distance:</strong> Distancia (km, metros o millas - se detecta automáticamente)<br>
-         <strong>Elapsed Time:</strong> Tiempo total en segundos (PREFERIDO para cálculo preciso)<br>
-         <strong>Average Pace:</strong> Pace promedio (respaldo si no hay Elapsed Time)
-        </div>
-        ''', unsafe_allow_html=True)
     
     # FOOTER ESTILO STRAVA
     st.markdown('---')
