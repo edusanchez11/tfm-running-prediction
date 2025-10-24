@@ -1,4 +1,5 @@
-﻿import streamlit as st
+﻿from turtle import color
+import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
@@ -19,16 +20,54 @@ st.set_page_config(
 
 # COLORES STRAVA
 STRAVA_ORANGE = '#FC4C02'
-STRAVA_DARK = '#242428' 
+STRAVA_DARK = '#242428'
+STRAVA_ORANGE_TRANSPARENT = 'rgba(252, 76, 2, 0.7)' 
 STRAVA_GRAY = '#6A6B6D'
 STRAVA_LIGHT = '#F5F5F5'
 
 # CSS para estilo Strava
 st.markdown(f'''
 <style>
+    /* 1. Fondo principal de la app */
     .stApp {{
-        background-color: white;
+        background-color: {STRAVA_LIGHT};
     }}
+
+    /* 2. Fondo de la barra lateral */
+    [data-testid="stSidebar"] {{
+        background-color: {STRAVA_ORANGE_TRANSPARENT};
+    }}
+
+    /* 3. Color de los TÍTULOS de la barra lateral (CONFIGURACIÓN, FILTROS) */
+    [data-testid="stSidebar"] h1,
+    [data-testid="stSidebar"] h2,
+    [data-testid="stSidebar"] h3,
+    [data-testid="stSidebar"] h4 {{
+        color: white; /* Letra blanca para títulos */
+    }}
+
+    /* 4. Color del texto DENTRO del expander ("Información personal") */
+    [data-testid="stSidebar"] [data-testid="stExpander"] summary {{
+        color: {STRAVA_DARK}; /* Letra oscura */
+    }}
+
+    /* 5. Color del texto de las etiquetas de los widgets (Edad, Género...) */
+    [data-testid="stSidebar"] label {{
+        color: {STRAVA_DARK}; /* Letra oscura */
+    }}
+
+    /* 6. Color del texto de las "pills" del multiselect (2024, 2025) */
+    [data-testid="stSidebar"] [data-testid="stTag"] {{
+        color: {STRAVA_DARK} !important; /* Letra oscura (forzado) */
+    }}
+
+    /* 7. "Pills" en la página principal (Días) */
+    [data-testid="stAppViewContainer"] [data-testid="stTag"] {{
+        background-color: {STRAVA_ORANGE} !important; /* Forzar fondo naranja */
+        color: white !important; /* Forzar texto blanco */
+    }}
+
+    /* --- Resto de tu CSS (sin cambios) --- */
     .metric-card {{
         background: linear-gradient(135deg, {STRAVA_ORANGE} 0%, #ff6b35 100%);
         padding: 20px;
@@ -51,7 +90,7 @@ st.markdown(f'''
         font-weight: bold;
     }}
     .kpi-container {{
-        background: {STRAVA_LIGHT};
+        background: white; /* Cambiado a blanco para contrastar con el fondo gris */
         padding: 15px;
         border-radius: 8px;
         border-left: 4px solid {STRAVA_ORANGE};
@@ -65,7 +104,7 @@ st.markdown(f'''
         text-align: center;
     }}
     .training-plan {{
-        background: {STRAVA_LIGHT};
+        background: white; /* Cambiado a blanco */
         padding: 20px;
         border-radius: 10px;
         border: 2px solid {STRAVA_ORANGE};
