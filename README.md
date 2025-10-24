@@ -1,4 +1,4 @@
-﻿#  Predicción del Rendimiento en Corredores mediante Técnicas de Machine Learning: Un Enfoque Aplicado al Sector Deportivo
+#  Predicción del Rendimiento en Corredores mediante Técnicas de Machine Learning: Un Enfoque Aplicado al Sector Deportivo
 
 [![Python](https://img.shields.io/badge/python-v3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Streamlit](https://img.shields.io/badge/streamlit-1.28+-red.svg)](https://streamlit.io/)
