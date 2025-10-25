@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentación TFM: Predicción de Rendimiento</title>
+    <style>
+        /* Estilos Generales */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Oculta el scroll del BODY */
+        }
+
+        /* Variables de Color (basadas en el TFM) */
+        :root {
+            --strava-orange: #FC4C02;
+            --strava-dark: #242428;
+            --strava-light: #F5F5F5;
+        }
+
+        /* --- INICIO DE MODIFICACIÓN CSS 1 --- */
+
+        /* Estilo de la Diapositiva */
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: none; /* Ocultas por defecto */
+            flex-direction: column;
+            justify-content: flex-start;  /* <-- CAMBIADO (de center a flex-start) */
+            align-items: center;
+            padding: 4vh 4rem;
+            box-sizing: border-box;
+            background-color: white;
+            position: absolute;
+            top: 0;
+            left: 0;
+            overflow-y: auto; /* <-- AÑADIDO (scroll si es necesario) */
+        }
+
+        /* --- FIN DE MODIFICACIÓN CSS 1 --- */
+
+
+        /* --- INICIO DE MODIFICACIÓN CSS 2 --- */
+
+        /* Diapositiva de Título */
+        .slide-title {
+            background-color: var(--strava-dark);
+            color: var(--strava-light);
+            text-align: center;
+            justify-content: flex-start; /* <-- CAMBIADO (de space-between a flex-start) */
+            padding-top: 10vh; 
+            padding-bottom: 10vh;
+        }
+
+        /* --- FIN DE MODIFICACIÓN CSS 2 --- */
+
+        .slide-title h1 {
+            font-size: 4rem; 
+            color: white; 
+            margin-bottom: 0.8rem;
+        }
+        .slide-title h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-top: 0;
+            color: var(--strava-orange);
+        }
+        .slide-title p {
+            font-size: 1.6rem; 
+            color: var(--strava-light);
+            max-width: 800px; 
+            margin: 1.5rem auto; 
+        }
+
+        /* Estilo específico para el botón de la portada */
+        .slide-title .nav-btn {
+            background-color: var(--strava-orange);
+            color: white;
+            border: none;
+            padding: 1rem 3rem; 
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+            transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+            margin-top: 3rem; 
+        }
+        .slide-title .nav-btn:hover {
+            background-color: #ff5a17; 
+            transform: translateY(-3px); 
+            box-shadow: 0 9px 20px rgba(0,0,0,0.4);
+        }
+
+
+        /* Diapositivas de Contenido */
+        .slide h2 {
+            font-size: 2.5rem;
+            color: var(--strava-orange);
+            border-bottom: 3px solid var(--strava-orange);
+            padding-bottom: 10px;
+            width: 80%;
+            text-align: left;
+            margin-top: 0; 
+        }
+
+        .content-container {
+            display: flex;
+            width: 80%;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 2rem;
+        }
+
+        .content-box {
+            flex-basis: 48%;
+        }
+        
+        .content-box h3 {
+            font-size: 1.8rem;
+            color: var(--strava-dark);
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 1.2rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        li::before {
+            content: '✓';
+            color: var(--strava-orange);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            font-size: 1.5rem;
+        }
+
+        /* Navegación */
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background-color: var(--strava-orange);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 0 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: background-color 0.2s, transform 0.2s;
+        }
+        .nav-btn:hover {
+            background-color: var(--strava-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Mostrar la primera diapositiva */
+        #slide-1 {
+            display: flex;
+        }
+
+    </style>
+</head>
+<body>
+
+    <section class="slide slide-title" id="slide-1">
+        <h1>Predicción del Rendimiento en Running</h1>
+        <h2>Un enfoque aplicado con Machine Learning</h2>
+        <p>Eduardo Sánchez</p>
+        <br>
+        <p><strong>Objetivo:</strong> Desarrollar un sistema que predice el rendimiento en corredores,
+        desde el análisis de datos de Strava hasta una app funcional.</p>
+        
+        <button class="nav-btn" onclick="changeSlide(1)">Comenzar</button>
+    </section>
+
+    <section class="slide" id="slide-2">
+        <h2>El Problema y la Solución</h2>
+        <div class="content-container">
+            <div class="content-box">
+                <h3>El Problema (El "Por Qué")</h3>
+                <ul>
+                    <li>La planificación del running se basa a menudo en la <strong>experiencia subjetiva</strong>.</li>
+                    <li>Faltan herramientas científicas precisas para predecir y optimizar.</li>
+                </ul>
+                <h3>¿Qué hace el sistema? (Funcionalidad)</h3>
+                <ul>
+                    <li>Ofrece <strong>predicciones personalizadas</strong> del rendimiento (pace).</li>
+                    <li>Genera <strong>planes de entrenamiento adaptativos</strong>.</li>
+                    <li>Simula la progresión futura del corredor.</li>
+                </ul>
+            </div>
+            <div class="content-box">
+                <h3>¿Para Qué? (Casos de Uso)</h3>
+                <ul>
+                    <li><strong>Para Corredores:</strong> Optimizar su entrenamiento, prevenir lesiones y establecer objetivos realistas.</li>
+                    <li><strong>Para Entrenadores:</strong> Usar una herramienta científica para diseñar planes personalizados y monitorizar a sus atletas.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="slide" id="slide-3">
+        <h2>Resultados Clave del Modelo</h2>
+        <div class="content-container">
+            <div class="content-box">
+                <h3>¿Qué tan bueno es el modelo?</h3>
+                <ul>
+                    <li><strong>Precisión:</strong> Predice el pace con un error de solo <strong>29 segundos</strong>.</li>
+                    <li><strong>Fiabilidad (R²):</strong> Explica el <strong>78.5%</strong> del rendimiento.</li>
+                    <li><strong>Modelo:</strong> El modelo final es un <strong>Random Forest</strong> por su gran equilibrio.</li>
+                </ul>
+            </div>
+            <div class="content-box">
+                <h3>¿Qué predice tu rendimiento?</h3>
+                <ul>
+                    <li><strong>Eficiencia Aeróbica (68%):</strong> Es el factor MÁS importante.</li>
+                    <li><strong>Volumen Semanal (14%):</strong> Cuántos km corres a la semana.</li>
+                    <li><strong>Consistencia (9%):</strong> La regularidad de tus ritmos y entrenamientos.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="slide" id="slide-4">
+        <h2>El Resultado: MVP con Streamlit</h2>
+        <div class="content-container">
+            <div class="content-box">
+                <h3>La Aplicación Web</h3>
+                <ul>
+                    <li>Se desarrolló un Producto Mínimo Viable (MVP) como una app web interactiva.</li>
+                    <li><strong>Tecnología:</strong> Construida en <strong>Streamlit</strong> (Python).</li>
+                    <li><strong>¿Por qué Streamlit?</strong> Permite un desarrollo rápido y una integración nativa con los modelos de Machine Learning.</li>
+                </ul>
+            </div>
+            <div class="content-box">
+                <h3>Funcionalidad (Demo)</h3>
+                <ul>
+                    <li>Carga automática del CSV de Strava.</li>
+                    <li>Dashboard de estadísticas y KPIs.</li>
+                    <li><strong>Simulador de Progresión ML</strong>.</li>
+                    <li><strong>Generador de Planes</strong> adaptativo (según nivel y objetivo).</li>
+                    <li>Interfaz con el diseño y colores de Strava.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)">Anterior</button>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Siguiente</button>
+    </div>
+
+    <script>
+        // Lógica de Navegación
+        let currentSlide = 1;
+        const totalSlides = 4;
+        const slides = document.querySelectorAll('.slide');
+
+        function showSlide(slideIndex) {
+            // Ocultar todas las diapositivas
+            slides.forEach(slide => {
+                slide.style.display = 'none';
+            });
+            // Mostrar la diapositiva actual
+            const slideToShow = document.getElementById(`slide-${slideIndex}`);
+            if (slideToShow) {
+                slideToShow.style.display = 'flex';
+            }
+
+            // Actualizar botones (ocultar ambos en la primera diapositiva)
+            document.getElementById('prev-btn').style.display = (slideIndex <= 1) ? 'none' : 'inline-block';
+            document.getElementById('next-btn').style.display = (slideIndex === totalSlides) ? 'none' : 'inline-block';
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            
+            // Asegurarse de que no se salga de los límites
+            if (currentSlide < 1) currentSlide = 1;
+            if (currentSlide > totalSlides) currentSlide = totalSlides;
+
+            showSlide(currentSlide);
+        }
+
+        // Inicializar la primera diapositiva
+        document.addEventListener('DOMContentLoaded', () => {
+            showSlide(currentSlide);
+        });
+    </script>
+
+</body>
+</html>
